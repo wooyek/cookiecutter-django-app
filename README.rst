@@ -10,12 +10,13 @@ Instead of hacking boilerplate setup you can jump to coding immediately. All the
 * GitHub repo: https://github.com/wooyek/cookiecutter-django-app/
 * Documentation: https://cookiecutter-django-app.readthedocs.io/
 * Free software: BSD license
+
 .. image:: https://travis-ci.org/wooyek/cookiecutter-django-app.svg
     :target: https://travis-ci.org/wooyek/cookiecutter-django-app
     :alt: Linux build status on Travis CI
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/wooyek/cookiecutter-django-app?branch=master&svg=true
-    :target: https://ci.appveyor.com/project/wooyek/cookiecutter-django-app/branch/master
+.. image:: https://ci.appveyor.com/api/projects/status/github/wooyek/cookiecutter-django-app?svg=true
+    :target: https://ci.appveyor.com/project/wooyek/cookiecutter-django-app
     :alt: Windows build status on Appveyor
 
 .. image:: https://readthedocs.org/projects/cookiecutter-django-app/badge/?version=latest
