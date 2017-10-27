@@ -1,0 +1,23 @@
+# {{ cookiecutter.project_name }} dependencies (excluding django which is set in appropriate version by tox)
+# For development we keep them unfreezed to work and test on newest versions as soon as they are released
+
+# Here are some popular dependencies
+pytz
+pycountry
+isoweek
+markdown
+html2text
+requests
+psycopg2
+django-environ
+django-pascal-templates
+django-localflavor
+django-formtools
+django_email_queue
+django-powerbank
+django-polymodels
+django-reversion
+jinja2-highlight
+django-import-export
+django-betterforms
+raven

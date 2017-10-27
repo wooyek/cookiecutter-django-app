@@ -1,0 +1,11 @@
+# For local development we ween all there is in testing
+-r test.txt
+# We want to install (not modifiy PYTHONPATH) local package in editable mode
+-e .
+
+# Other locally needed tooling
+pip
+setuptools
+bumpversion
+wheel
+invoke
