@@ -2,7 +2,7 @@
 Cookiecutter Django App Package
 ===============================
 
-Cookiecutter_ template for a Python PyPI ready package library with django app or module, extends upon `wooyek/cookiecutter-django-app`_
+Cookiecutter_ template for a Python PyPI ready package library with django app or module, extends upon `wooyek/cookiecutter-pylib`_
 
 Instead of hacking boilerplate setup you can jump to coding immediately. All the check are already in place and a your package can be nicely released to pypi.
 
@@ -116,7 +116,7 @@ It will sync your local and origin repo, test, increment version number, setup a
 .. _PyPi: https://pypi.python.org/pypi
 
 .. _`available cookiecutters`: http://cookiecutter.readthedocs.io/en/latest/readme.html#available-cookiecutters
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage/
+.. _`wooyek/cookiecutter-pylib`: https://github.com/wooyek/cookiecutter-pylib
 .. _`ardydedase/cookiecutter-django-app`: https://github.com/ardydedase/cookiecutter-django-app
 .. _github comparison view: https://github.com/tony/cookiecutter-django-app-pythonic/compare/audreyr:master...master
 .. _`network`: https://github.com/wooyek/cookiecutter-django-app/network
