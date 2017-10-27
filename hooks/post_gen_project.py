@@ -4,6 +4,10 @@ import os
 import shutil
 from subprocess import call
 
+import six
+import sys
+import platform
+
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
 
@@ -13,9 +17,15 @@ def remove_file(filepath):
 
 def boostrap_venv():
     print("-------> Bootstrapping virtual environment")
-    call(["python3", "-m", "venv", "--clear", ".pyvenv"])
-    call([".pyvenv/bin/python", "-m", "pip", "install", "-U", "pip", "setuptools"])
-    call([".pyvenv/bin/python", "-m", "pip", "install", "-r", "requirements/local.txt"])
+    if six.PY2:
+        call(["virtualenv", "--clear", ".pyvenv"])
+    else:
+        # On Windows  current python3 may just be python or not available from PATH
+        py = sys.executable or 'python3'
+        call([py, "-m", "venv", "--clear", ".pyvenv"])
+    venv_py = ".pyvenv/Scripts/python" if platform.system() == "Windows" else ".pyvenv/bin/python"
+    call([venv_py, "-m", "pip", "install", "-U", "pip", "setuptools"])
+    call([venv_py, "-m", "pip", "install", "-r", "requirements/local.txt"])
 
 
 def git_init():
@@ -25,13 +35,6 @@ def git_init():
     call(["git", "commit", "-am", "init"])
     call(["git", "flow", "init", "-d"])
     call(["git", "remote", "add", "origin", "{{ cookiecutter.repo_url }}.git"])
-
-def remove_example_project():
-    location = os.path.join(
-        PROJECT_DIRECTORY,
-        'example_project'
-    )
-    shutil.rmtree(location)
 
 
 if __name__ == '__main__':
@@ -56,7 +59,8 @@ if __name__ == '__main__':
         call(["tox"])
 
     if '{{ cookiecutter.create_example_project }}'.lower() == 'n':
-        remove_example_project()
+	    location = os.path.join(PROJECT_DIRECTORY, 'example_project')
+	    shutil.rmtree(location)
 
     print(""" 
 =============================================================================== 
