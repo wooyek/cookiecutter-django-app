@@ -19,3 +19,9 @@ class UserFactory(factory.DjangoModelFactory):
     class Meta:
         model = get_user_model()
 
+
+class SampleModelFactory(factory.DjangoModelFactory):
+    name = factory.Faker('name')
+
+    class Meta:
+        model = models.SampleModel

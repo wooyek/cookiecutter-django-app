@@ -6,5 +6,5 @@ from pascal_templates.views import CreateView
 from . import models
 
 
-class JobPositionCreate(ReturnUrlMx, StaffRequiredMixin, CreateView):
+class SampleView(ReturnUrlMx, StaffRequiredMixin, CreateView):
     model = models.SampleModel
