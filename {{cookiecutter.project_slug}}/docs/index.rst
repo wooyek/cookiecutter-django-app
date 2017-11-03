@@ -1,5 +1,6 @@
-Welcome to {{ cookiecutter.project_name }}'s documentation!
-======================================
+{%- set titile="Welcome to %s's documentation!"|format(cookiecutter.project_name) -%}
+{{ titile }}
+{% for _ in titile %}={% endfor %}
 
 Contents:
 

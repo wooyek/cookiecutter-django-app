@@ -8,6 +8,8 @@ include README.rst
 
 include *.py
 include *.yml
+include *.in
+include *.txt
 include .bumpversion.cfg
 include .coveragerc
 include .editorconfig

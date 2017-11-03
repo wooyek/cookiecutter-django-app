@@ -17,12 +17,27 @@ def remove_file(filepath):
 
 def boostrap_venv():
     print("-------> Bootstrapping virtual environment")
+    # On Windows  current python3 may just be python or not available from PATH
+    py = sys.executable or 'python3'
+
+    if six.PY3 and shutil.which('pew'):
+        # delegate all the work to the pew tool
+        call((
+            "pew", 'new',
+            "--python", py,
+            '-a', PROJECT_DIRECTORY,
+            '-i', 'setuptools',
+            '-r', 'requirements/local.txt',
+            '--dont-activate',
+            '{{ cookiecutter.project_slug }}'
+        ))
+        return
+
     if six.PY2:
         call(["virtualenv", "--clear", ".pyvenv"])
     else:
-        # On Windows  current python3 may just be python or not available from PATH
-        py = sys.executable or 'python3'
         call([py, "-m", "venv", "--clear", ".pyvenv"])
+
     venv_py = ".pyvenv/Scripts/python" if platform.system() == "Windows" else ".pyvenv/bin/python"
     call([venv_py, "-m", "pip", "install", "-U", "pip", "setuptools"])
     call([venv_py, "-m", "pip", "install", "-r", "requirements/local.txt"])
@@ -38,29 +53,30 @@ def git_init():
 
 
 if __name__ == '__main__':
-    if '{{ cookiecutter.use_pypi_deployment_with_travis }}' != 'y':
-        remove_file('travis_pypi_setup.py')
-
     if '{{ cookiecutter.create_author_file }}' != 'y':
         remove_file('AUTHORS.rst')
         remove_file('docs/authors.rst')
 
-    if '{{ cookiecutter.include_sphinx_doc }}' != 'y':
-        shutil.rmtree(os.path.join(PROJECT_DIRECTORY, 'docs'))
-
-    if '{{ cookiecutter.git_init }}'.lower() == 'y':
-        git_init()
-
     if '{{ cookiecutter.create_virtual_environment }}'.lower() == 'y':
         boostrap_venv()
+
+        if '{{ cookiecutter.include_sphinx_doc }}' == 'y':
+            print("-------> Building documentation")
+            call(["make", "docs"])
+
+    if '{{ cookiecutter.include_sphinx_doc }}' != 'y':
+        shutil.rmtree(os.path.join(PROJECT_DIRECTORY, 'docs'))
 
     if '{{ cookiecutter.run_tests_on_init }}' == 'y':
         print("-------> Running tests")
         call(["tox"])
 
     if '{{ cookiecutter.create_example_project }}'.lower() == 'n':
-	    location = os.path.join(PROJECT_DIRECTORY, 'example_project')
-	    shutil.rmtree(location)
+        location = os.path.join(PROJECT_DIRECTORY, 'example_project')
+        shutil.rmtree(location)
+
+    if '{{ cookiecutter.git_init }}'.lower() == 'y':
+        git_init()
 
     print(""" 
 =============================================================================== 
@@ -73,3 +89,5 @@ and say thank's on twitter to it's authors.
 Thx, @wooyek
 ===============================================================================    
 """)
+    if '{{ cookiecutter.create_virtual_environment }}'.lower() == 'y' and six.PY3 and shutil.which('pew'):
+        call(["pew", "workon", "{{ cookiecutter.project_slug }}"])

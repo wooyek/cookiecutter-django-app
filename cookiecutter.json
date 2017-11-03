@@ -27,7 +27,6 @@
   "create_example_project": "Y",
   "create_author_file": "y",
   "use_travis_ci": "y",
-  "use_pypi_deployment_with_travis": "{{ cookiecutter.use_travis_ci }}",
   "use_read_the_docs": "y",
   "sphinx_theme": [
     "sphinx-rtd-theme",

@@ -29,7 +29,7 @@ install_requires = parse_requirements(
 )
 
 test_requirements = parse_requirements(
-    os.path.join(os.path.dirname(__file__), "requirements", "test.txt"),
+    os.path.join(os.path.dirname(__file__), "requirements", "testing.txt"),
     session=uuid.uuid1()
 )
 

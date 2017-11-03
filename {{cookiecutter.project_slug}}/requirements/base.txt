@@ -2,22 +2,24 @@
 # For development we keep them unfreezed to work and test on newest versions as soon as they are released
 
 # Here are some popular dependencies
-pytz
-pycountry
-isoweek
-markdown
-html2text
-requests
-psycopg2
-django-environ
-django-pascal-templates
-django-localflavor
-django-formtools
-django_email_queue
-django-powerbank
-django-polymodels
-django-reversion
-jinja2-highlight
-django-import-export
+django
 django-betterforms
+django-environ
+django-formtools
+django-import-export
+django-localflavor
+django-pascal-templates
+django-polymodels
+django-powerbank
+django-reversion
+django_email_queue
+html2text
+isoweek
+jinja2-highlight
+markdown
+maya
+psycopg2
+pycountry
+pytz
 raven
+requests
