@@ -1,11 +1,9 @@
--r base.txt
-coverage
+-r optional.txt
 mock
-flake8
-tox
-codecov
 pytest
 pytest-xdist
 pytest-html
 pytest-django
 factory-boy
+psycopg2
+django-environ

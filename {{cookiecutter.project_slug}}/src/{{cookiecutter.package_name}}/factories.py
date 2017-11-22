@@ -1,11 +1,12 @@
 # coding=utf-8
 import factory
+import faker
 from django.contrib.auth import get_user_model
-from faker import Faker
+from django.utils import timezone
 
-from {{cookiecutter.package_name}} import models
+from . import models
 
-fake = Faker()
+fake = faker.Faker()
 
 
 class UserFactory(factory.DjangoModelFactory):

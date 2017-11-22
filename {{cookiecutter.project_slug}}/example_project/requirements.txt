@@ -1,7 +1,13 @@
-# Your app requirements.
--r ../requirements/local.txt
+# Install {{ cookiecutter.project_slug }} in editable mode, it's requirements for local development
+# and this example in editable mode
+# NOTE: paths are realative to CWD and not this file parent folder
+# Running pip install -r example_project/requiremenst.txt
+-e ..
+-e .
+#-r ../requirements/development.txt
 
-# Your app in editable mode.
--e ../
+# This example requirements that may not not be already included in the app requirements
 django
 django-environ
+gunicorn
+psycopg2

@@ -47,11 +47,14 @@ clean-test: ## remove test and coverage artifacts
 	rm -f .coverage
 	rm -fr htmlcov/
 
+isort:
+	isort --verbose --recursive src tests setup.py
+
 lint: ## check style with flake8
+	flake8 src tests setup.py manage.py
+	isort --verbose --check-only --diff --recursive src tests setup.py
 	python setup.py check --strict --metadata --restructuredtext
 	check-manifest  --ignore .idea,.idea/* .
-	flake8 src tests setup.py
-	isort --verbose --check-only --diff --recursive src tests setup.py
 
 test: ## run tests quickly with the default Python
 	pytest
@@ -106,7 +109,10 @@ sync: ## Sync master and develop branches in both directions
 bump: ## increment version number
 	bumpversion patch
 
-release: sync test-all bump publish ## package and upload a release
+upgrade: ## upgrade frozen requirements to the latest version
+	pipenv lock --requirements > requirements.txt
+
+release: sync test-all bump publish ## build and test new package release then upload to pypi
 	git checkout develop
 	git merge master --verbose
 	git push origin develop --verbose
