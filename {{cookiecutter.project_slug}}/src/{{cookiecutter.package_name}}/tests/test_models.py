@@ -10,8 +10,8 @@ Tests for `{{ cookiecutter.project_slug }}` models module.
 
 from django.test import TestCase
 
-from {{ cookiecutter.package_name }} import models
-from tests import factories
+from .. import models
+from .. import factories
 
 
 class Test{{ cookiecutter.package_name|title|replace("_", "") }}(TestCase):
