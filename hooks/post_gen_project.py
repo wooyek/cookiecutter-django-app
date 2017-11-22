@@ -23,14 +23,14 @@ def bootstrap_pew(python):
         "--python", python,
         '-a', PROJECT_DIRECTORY,
         '-i', 'setuptools',
-        '-r', 'requirements/local.txt',
+        '-r', 'requirements/development.txt',
         '--dont-activate',
         '{{ cookiecutter.project_slug }}'
     ))
     return
 
 
-def bootsrap_pyvenv(python):
+def bootstrap_pyvenv(python):
     if six.PY2:
         print("-------> VirtualEnv: Bootstrapping virtual environment")
         call(["virtualenv", "--clear", ".pyvenv"])
@@ -43,13 +43,13 @@ def bootsrap_pyvenv(python):
     call([venv_py, "-m", "pip", "install", "-r", "requirements/local.txt"])
 
 
-def bootsrap_venv():
+def bootstrap_venv():
     # On Windows  current python3 may just be python or not available from PATH
     python = sys.executable or 'python3'
     if six.PY3 and shutil.which('pew'):
         bootstrap_pew(python)
     else:
-        bootsrap_pyvenv(python)
+        bootstrap_pyvenv(python)
 
 
 def git_init():
@@ -67,7 +67,7 @@ if __name__ == '__main__':
         remove_file('docs/authors.rst')
 
     if '{{ cookiecutter.create_virtual_environment }}'.lower() == 'y':
-        boostrap_venv()
+        bootstrap_venv()
 
         if '{{ cookiecutter.include_sphinx_doc }}' == 'y':
             print("-------> Building documentation")
@@ -93,7 +93,7 @@ Hi there,
 
 as you probably know, creating and maintaining any open source is a massive 
 amount of free work. So please spread the word, star any project you use 
-and say thank's on twitter to it's authors.
+and say thank's to it's authors on twitter.
 
 Thx, @wooyek
 ===============================================================================    

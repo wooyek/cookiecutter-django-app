@@ -4,6 +4,6 @@ from import_export import resources, widgets
 from . import models
 
 
-class SampleModelResourceResource(resources.ModelResource):
+class SampleModelResource(resources.ModelResource):
     class Meta:
         model = models.SampleModel
