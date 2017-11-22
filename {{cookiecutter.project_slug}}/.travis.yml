@@ -4,15 +4,15 @@ python:
   - "3.5"
 
 env:
-  - TOXENV=py34-django-111
-  - TOXENV=py35-django-111
-  - TOXENV=py36-django-111
-  - TOXENV=py34-django-20
-  - TOXENV=py35-django-20
-  - TOXENV=py36-django-20
-  - TOXENV=py34-django-master
-  - TOXENV=py35-django-master
-  - TOXENV=py36-django-master
+  - TOX_ENV=py34-django-111
+  - TOX_ENV=py35-django-111
+  - TOX_ENV=py36-django-111
+  - TOX_ENV=py34-django-20
+  - TOX_ENV=py35-django-20
+  - TOX_ENV=py36-django-20
+  - TOX_ENV=py34-django-master
+  - TOX_ENV=py35-django-master
+  - TOX_ENV=py36-django-master
 
 matrix:
   fast_finish: true
@@ -32,7 +32,7 @@ install:
   - git --version
 
 script:
-  - tox -e $TOXENV
+  - tox -e $TOX_ENV
 
 jobs:
   include:
@@ -57,7 +57,7 @@ jobs:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - codecov -e TOXENV
+  - codecov -e TOX_ENV
   - coveralls
 
 notifications:

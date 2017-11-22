@@ -63,7 +63,7 @@ def test_readme(cookies):
         readme_file = result.project.join('README.rst')
         readme_lines = [x.strip() for x in readme_file.readlines(cr=False)]
         assert 'Add it to your `INSTALLED_APPS`:' in readme_lines
-        assert '(myenv) $ pip install tox' in readme_lines
+        assert '$ pipenv install --dev' in readme_lines
 
 
 def test_urls_without_model(cookies):
@@ -88,7 +88,7 @@ def test_travis(cookies):
 
         travis_file = result.project.join('.travis.yml')
         travis_text = travis_file.read()
-        assert 'script: tox -e $TOX_ENV' in travis_text
+        assert 'script:\n  - tox -e $TOX_ENV' in travis_text
 
 
 def test_tox(cookies):
