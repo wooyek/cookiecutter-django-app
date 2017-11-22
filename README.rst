@@ -98,7 +98,7 @@ Code has been written, but does it actually work? Let's find out!
 ::
 
     source .pyvenv/bin/activate
-    (pyvenv) $ pip install -r requirements/local.txt
+    (pyvenv) $ pip install -r requirements/development.txt
     (pyvenv) $ pytest
     (pyvenv) $ python setup.py test
     (pyvenv) $ tox

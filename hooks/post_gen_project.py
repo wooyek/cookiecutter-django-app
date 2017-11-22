@@ -40,7 +40,7 @@ def bootstrap_pyvenv(python):
 
     venv_py = ".pyvenv/Scripts/python" if platform.system() == "Windows" else ".pyvenv/bin/python"
     call([venv_py, "-m", "pip", "install", "-U", "pip", "setuptools"])
-    call([venv_py, "-m", "pip", "install", "-r", "requirements/local.txt"])
+    call([venv_py, "-m", "pip", "install", "-r", "requirements/development.txt"])
 
 
 def bootstrap_venv():
