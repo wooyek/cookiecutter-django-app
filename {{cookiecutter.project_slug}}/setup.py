@@ -87,7 +87,7 @@ setup(
     author="{{ cookiecutter.full_name.replace('\"', '\\\"') }}",
     author_email='{{ cookiecutter.email }}',
     url='{{ cookiecutter.project_url }}',
-    packages=find_packages('src'),
+    packages=find_packages('src', exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     entry_points={
@@ -96,7 +96,14 @@ setup(
         ]
     },
     include_package_data=True,
+    exclude_package_data={
+        '': ['test*.py', 'tests/*.env', '**/tests.py'],
+    },
+    python_requires='>=2.7',
     install_requires=[str(r.req) for r in install_requires] + ['Django>=1.10'],
+    extras_require={
+        'factories': ['factory-boy'],
+    },
 {%- if cookiecutter.open_source_license in license_classifiers %}
     license="{{ cookiecutter.open_source_license }}",
 {%- endif %}

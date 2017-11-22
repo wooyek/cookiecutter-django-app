@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 import logging
 import os
+from pathlib import Path
 
 import environ
 
@@ -12,50 +13,79 @@ logging.disable(logging.NOTSET)
 
 logging.debug("Settings loading: %s" % __file__)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.dirname(BASE_DIR)
+BASE_DIR = Path(__file__).parents[0]
 
-environ.Env.read_env(os.path.join(ROOT_DIR, "tests", "testing.env"))
+environ.Env.read_env(str(Path(__file__).with_suffix('.env')))
 env = environ.Env()
 
 DEBUG = True
-USE_TZ = True
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+SECRET_KEY = env('SECRET_KEY')
+
+# Database
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+DATABASES = {}
 
 if "DATABASE_URL" in os.environ:  # pragma: no cover
-    DATABASES = {
-        'default': env.db(),
-    }
-
+    DATABASES['default'] = env.db()
     DATABASES['default']['TEST'] = {'NAME': env("DATABASE_TEST_NAME", default=None)}
     DATABASES['default']['OPTIONS'] = {
         'options': '-c search_path=gis,public,pg_catalog',
         'sslmode': 'require',
     }
 else:
-    DATABASES = {
-        'default': {
-            "ENGINE": "django.db.backends.sqlite3",
+    DATABASES['default'] = {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",
+        'TEST': {
             "NAME": ":memory:",
-            'TEST': {
-                "NAME": ":memory:",
-            }
         }
     }
 
-
-ROOT_URLCONF = "tests.urls"
+logging.debug("DATABASES: %s", DATABASES['default']['NAME'])
 
 INSTALLED_APPS = [
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sites",
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
     "{{ cookiecutter.package_name }}.apps.{{ cookiecutter.app_config_name }}",
 ]
 
-SITE_ID = 1
+ROOT_URLCONF = '{{ cookiecutter.package_name }}.tests.urls'
+
+TEMPLATES = [
+    {
+        # https://docs.djangoproject.com/en/dev/topics/templates/#django.template.backends.django.DjangoTemplates
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                'django.template.loaders.eggs.Loader',
+            ],
+        },
+    },
+]
+
+# Internationalization
+# https://docs.djangoproject.com/en/dev/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
 
 LOGGING = {
     'version': 1,

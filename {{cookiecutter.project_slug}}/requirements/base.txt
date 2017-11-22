@@ -1,5 +1,7 @@
-# {{ cookiecutter.project_name }} dependencies (excluding django which is set in appropriate version by tox)
+# {{ cookiecutter.project_name }} dependencies 
+# Django maybe missing here if multiple verssion are to be tested and installed by tox
 # For development we keep them unfreezed to work and test on newest versions as soon as they are released
+# Freezing can be perforemd by pip-compile or pipenv
 
 # Here are some popular dependencies
 django

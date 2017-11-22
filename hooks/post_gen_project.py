@@ -15,32 +15,41 @@ def remove_file(filepath):
     os.remove(os.path.join(PROJECT_DIRECTORY, filepath))
 
 
-def boostrap_venv():
-    print("-------> Bootstrapping virtual environment")
-    # On Windows  current python3 may just be python or not available from PATH
-    py = sys.executable or 'python3'
+def bootstrap_pew(python):
+    print("-------> Python Env Wrapper: Bootstrapping virtual environment")
+    # delegate all the work to the pew tool
+    call((
+        "pew", 'new',
+        "--python", python,
+        '-a', PROJECT_DIRECTORY,
+        '-i', 'setuptools',
+        '-r', 'requirements/local.txt',
+        '--dont-activate',
+        '{{ cookiecutter.project_slug }}'
+    ))
+    return
 
-    if six.PY3 and shutil.which('pew'):
-        # delegate all the work to the pew tool
-        call((
-            "pew", 'new',
-            "--python", py,
-            '-a', PROJECT_DIRECTORY,
-            '-i', 'setuptools',
-            '-r', 'requirements/local.txt',
-            '--dont-activate',
-            '{{ cookiecutter.project_slug }}'
-        ))
-        return
 
+def bootsrap_pyvenv(python):
     if six.PY2:
+        print("-------> VirtualEnv: Bootstrapping virtual environment")
         call(["virtualenv", "--clear", ".pyvenv"])
     else:
-        call([py, "-m", "venv", "--clear", ".pyvenv"])
+        print("-------> PyVenv: Bootstrapping virtual environment")
+        call([python, "-m", "venv", "--clear", ".pyvenv"])
 
     venv_py = ".pyvenv/Scripts/python" if platform.system() == "Windows" else ".pyvenv/bin/python"
     call([venv_py, "-m", "pip", "install", "-U", "pip", "setuptools"])
     call([venv_py, "-m", "pip", "install", "-r", "requirements/local.txt"])
+
+
+def bootsrap_venv():
+    # On Windows  current python3 may just be python or not available from PATH
+    python = sys.executable or 'python3'
+    if six.PY3 and shutil.which('pew'):
+        bootstrap_pew(python)
+    else:
+        bootsrap_pyvenv(python)
 
 
 def git_init():

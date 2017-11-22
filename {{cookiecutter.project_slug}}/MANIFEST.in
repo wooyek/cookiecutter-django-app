@@ -15,6 +15,9 @@ include .coveragerc
 include .editorconfig
 include Makefile
 include tox.ini
+include *.json
+include Procfile
+include .env Pipfile Pipfile.lock
 
 recursive-include .github *.*
 recursive-include requirements *.*
@@ -30,12 +33,22 @@ recursive-include src *.py
 recursive-include src *.css
 recursive-include src *.html
 recursive-include src *.js
+recursive-include src *.csv
 recursive-include src .gitignore
+recursive-include src *.env
+recursive-include bin * *.*
 recursive-include tests *.env
 recursive-include tests *.py
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
+recursive-exclude * .eggs .tox .tmp
 recursive-include example_project *.html
 recursive-include example_project *.md
 recursive-include example_project *.py
 recursive-include example_project *.txt
+recursive-include example_project *.env
+recursive-include example_project .gitignore
+recursive-exclude example_project/.eggs *.*
+recursive-include example_project *.iml
+recursive-include example_project *.xml
+exclude example_project/.idea/workspace.xml

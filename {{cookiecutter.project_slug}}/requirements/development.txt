@@ -8,11 +8,10 @@
 -e .
 
 # Tooling
-# TODO: Not install tooling into virtualenv
-# -r tooling.txt
+-r tooling.txt
 
 {% if cookiecutter.include_sphinx_doc == 'y' -%}
-# Documentaion
+# Documentation
 -r ../docs/requirements.txt
 {% endif %}
 

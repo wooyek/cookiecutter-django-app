@@ -29,9 +29,24 @@ project_root = os.path.dirname(cwd)
 # Insert the project root dir as the first element in the PYTHONPATH.
 # This lets us ensure that the source package is imported, and that its
 # version is used.
+sys.path.insert(0, project_root)
 sys.path.insert(0, os.path.join(project_root, 'src'))
 
+
+def setup_django():
+    import django
+    from django.conf import settings
+    from {{ cookiecutter.package_name }}.tests.settings import INSTALLED_APPS
+    settings.configure(INSTALLED_APPS=INSTALLED_APPS)
+    django.setup()
+
+setup_django()
 import {{ cookiecutter.package_name }}
+
+autodoc_default_flags = ['members',]
+autosummary_generate = True
+modindex_common_prefix = ['{{ cookiecutter.package_name }}.']
+# html_domain_indices = ['py-modindex']  # ignore np-modindex
 
 # -- General configuration ---------------------------------------------
 
@@ -40,7 +55,12 @@ import {{ cookiecutter.package_name }}
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.autosummary',
+    'sphinxcontrib.spelling',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -188,7 +208,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = '{{ cookiecutter.package_name }}doc'
+htmlhelp_basename = '{{ cookiecutter.package_name }}_doc'
 
 
 # -- Options for LaTeX output ------------------------------------------
