@@ -48,11 +48,12 @@ autosummary_generate = True
 modindex_common_prefix = ['{{ cookiecutter.package_name }}.']
 # html_domain_indices = ['py-modindex']  # ignore np-modindex
 
+# TODO: Remove those ignores once you setup monitoring services and their links in documentation
 linkcheck_ignore = [
     r'https://saythanks.io/to/.+',
-    r'https://{{ cookiecutter.project_slug }}.readthedocs.io.+',
+    r'https://{{ cookiecutter.project_slug }}.readthedocs.io.*',
     r'https://codeclimate.com/github/{{ cookiecutter.repo_username }}/{{ cookiecutter.project_slug }}/maintainability',
-    r'https://github.com/{{ cookiecutter.repo_username }}/{{ cookiecutter.project_slug }}/blob/develop/LICENSE',
+    r'https://github.com/{{ cookiecutter.repo_username }}/{{ cookiecutter.project_slug }}.*',
     r'https://codecov.io/gh/{{ cookiecutter.repo_username }}/django-reusable',
     r'https://coveralls.io/github/{{ cookiecutter.repo_username }}/{{ cookiecutter.project_slug }}',
     r'https://pypi.python.org/pypi/{{ cookiecutter.project_slug }}',
