@@ -88,7 +88,7 @@ def test_travis(cookies):
 
         travis_file = result.project.join('.travis.yml')
         travis_text = travis_file.read()
-        assert 'script:\n  - tox -e $TOX_ENV' in travis_text
+        assert 'script: - tox' in travis_text
 
 
 def test_tox(cookies):

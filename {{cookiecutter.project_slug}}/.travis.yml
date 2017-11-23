@@ -42,8 +42,7 @@ install:
   - tox --version
   - git --version
 
-script:
-  - tox
+script: - tox
 
 jobs:
   include:
