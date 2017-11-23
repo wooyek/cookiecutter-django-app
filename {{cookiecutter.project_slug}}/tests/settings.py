@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     "{{ cookiecutter.package_name }}.apps.{{ cookiecutter.app_config_name }}",
 ]
 
-ROOT_URLCONF = '{{ cookiecutter.package_name }}.tests.urls'
+ROOT_URLCONF = 'tests.urls'
 
 TEMPLATES = [
     {

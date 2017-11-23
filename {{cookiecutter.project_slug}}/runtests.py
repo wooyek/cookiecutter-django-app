@@ -15,7 +15,7 @@ def run_tests(*test_args):
         test_args = ['tests']
 
     if 'DJANGO_SETTINGS_MODULE' not in os.environ:
-        os.environ['DJANGO_SETTINGS_MODULE'] = '{{ cookiecutter.package_name }}.tests.settings'
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.settings'
 
     django.setup()
     TestRunner = get_runner(settings)

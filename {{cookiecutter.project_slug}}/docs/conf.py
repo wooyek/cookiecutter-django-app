@@ -36,7 +36,7 @@ sys.path.insert(0, os.path.join(project_root, 'src'))
 def setup_django():
     import django
     from django.conf import settings
-    from {{ cookiecutter.package_name }}.tests.settings import INSTALLED_APPS
+    from tests.settings import INSTALLED_APPS
     settings.configure(INSTALLED_APPS=INSTALLED_APPS)
     django.setup()
 

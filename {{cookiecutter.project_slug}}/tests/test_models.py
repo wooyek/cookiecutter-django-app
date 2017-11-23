@@ -3,7 +3,7 @@
 
 from django.test import TestCase
 
-from .. import factories, models
+from {{cookiecutter.package_name}} import factories, models
 
 
 class TestSampleModel(TestCase):
