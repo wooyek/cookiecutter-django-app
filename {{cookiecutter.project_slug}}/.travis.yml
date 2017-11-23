@@ -9,7 +9,7 @@ python:
 env:
     - DJANGO=1.11
     - DJANGO=2.0
-    - DJANGO=master
+    - DJANGO=2.1
 
 matrix:
     fast_finish: true
@@ -17,16 +17,17 @@ matrix:
       - { python: "3.5", env: TOXENV=check }
       - { python: "3.5", env: TOXENV=docs }
     exclude:
+      # https://docs.djangoproject.com/en/dev/faq/install/#faq-python-version-support
       - { python: "2.7", env: DJANGO=2.0 }
       - { python: "3.4", env: DJANGO=2.0 }
-      - { python: "2.7", env: DJANGO=master }
-      - { python: "3.4", env: DJANGO=master }
-      - { python: "3.5", env: DJANGO=master }
+      - { python: "2.7", env: DJANGO=2.1 }
+      - { python: "3.4", env: DJANGO=2.1 }
+      - { python: "3.5", env: DJANGO=2.1 }
 
     allow_failures:
       - python: "2.7"
       - env: DJANGO=2.0
-      - env: DJANGO=master
+      - env: DJANGO=2.1
 
 before_install:
   - python --version
