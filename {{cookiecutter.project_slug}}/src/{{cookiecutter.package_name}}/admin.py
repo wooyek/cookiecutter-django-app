@@ -12,4 +12,3 @@ class SampleModelAdmin(ImportExportMixin, admin.ModelAdmin):
     list_filter = ('foo', )
     readonly_fields = ('foo', )
     # date_hierarchy = 'ts'
-

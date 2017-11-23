@@ -59,8 +59,11 @@ lint: ## check style with flake8
 test: ## run tests quickly with the default Python
 	pytest
 
-test-all: ## run tests on every Python version with tox
-	tox
+tox: ## run tests on every Python version with tox
+	tox --skip-missing-interpreters --recreate -e clean,py35-django-111,check,report,docs,spell
+
+detox: ## run tests on every Python version with tox
+	detox --skip-missing-interpreters --recreate -e clean,py35-django-111,check,report,docs,spell
 
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source src --parallel-mode setup.py test
@@ -112,7 +115,7 @@ bump: ## increment version number
 upgrade: ## upgrade frozen requirements to the latest version
 	pipenv lock --requirements > requirements.txt
 
-release: sync test-all bump publish ## build and test new package release then upload to pypi
+release: sync bump publish ## build new package varsion release then upload to pypi
 	git checkout develop
 	git merge master --verbose
 	git push origin develop --verbose

@@ -70,15 +70,15 @@ if __name__ == '__main__':
         bootstrap_venv()
 
         if '{{ cookiecutter.include_sphinx_doc }}' == 'y':
-            print("-------> Building documentation")
-            call(["make", "docs"])
+            if six.PY3 and shutil.which('pew'):
+                print("-------> Building documentation through vex + make")
+                call(["vex", "{{ cookiecutter.project_slug }}", "make", "docs"])
+            else:
+                # TODO: Activate pyvenv before running make
+                call(["make", "docs"])
 
     if '{{ cookiecutter.include_sphinx_doc }}' != 'y':
         shutil.rmtree(os.path.join(PROJECT_DIRECTORY, 'docs'))
-
-    if '{{ cookiecutter.run_tests_on_init }}' == 'y':
-        print("-------> Running tests")
-        call(["tox"])
 
     if '{{ cookiecutter.create_example_project }}'.lower() == 'n':
         location = os.path.join(PROJECT_DIRECTORY, 'example_project')
@@ -87,9 +87,16 @@ if __name__ == '__main__':
     if '{{ cookiecutter.git_init }}'.lower() == 'y':
         git_init()
 
+    if '{{ cookiecutter.run_tests_on_init }}' == 'y':
+        print("-------> Running tests")
+        # call(["detox", "--skip-missing-interpreters"])
+        # call(["detox", "--skip-missing-interpreters", "-e", "clean,py35-django-111,check,report,docs,spell"])
+        # call(["make", "test"])
+        call(["make", "tox"])
+
     print(""" 
 =============================================================================== 
-Hi there, 
+Hi {{ cookiecutter.repo_username }}, 
 
 as you probably know, creating and maintaining any open source is a massive 
 amount of free work. So please spread the word, star any project you use 

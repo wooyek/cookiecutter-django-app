@@ -2,7 +2,6 @@
 import factory
 import faker
 from django.contrib.auth import get_user_model
-from django.utils import timezone
 
 from . import models
 

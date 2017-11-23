@@ -52,6 +52,7 @@
 {% if cookiecutter.use_read_the_docs == 'y' -%}
 * Documentation: https://{{ cookiecutter.project_slug | replace("_", "-") }}.readthedocs.io.
 {%- endif %}
+
 Features
 --------
 

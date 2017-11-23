@@ -64,11 +64,16 @@ Features
 Quickstart
 ----------
 
-Install the latest Cookiecutter if you haven't installed it yet::
+Before we start we need some tooling::
 
-    pip install -U cookiecutter
+    curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python
+    pipsi install cookiecutter
+    pipsi install detox
+    pipsi install pew
+    pipsi install vex
+    pipsi install pipenv
 
-Generate a Python package project::
+Now we can generate and initialize a Django app package project::
 
     cookiecutter https://github.com/wooyek/cookiecutter-django-app.git
 

@@ -1,27 +1,28 @@
 # {{ cookiecutter.project_name }} dependencies 
-# Django maybe missing here if multiple verssion are to be tested and installed by tox
+# Django maybe missing here if multiple verssions are to be tested and installed by tox
 # For development we keep them unfreezed to work and test on newest versions as soon as they are released
 # Freezing can be perforemd by pip-compile or pipenv
 
 # Here are some popular dependencies
+click
 django
-django-betterforms
 django-environ
 django-formtools
 django-import-export
 django-localflavor
 django-pascal-templates
-django-polymodels
-django-powerbank
-django-reversion
-django_email_queue
-html2text
-isoweek
-jinja2-highlight
-markdown
-maya
+# django-polymodels
+# django-powerbank
+# django-reversion
+# django_email_queue
+# html2text
+# isoweek
+# jinja2-highlight
+# markdown
+# maya
 psycopg2
 pycountry
 pytz
-raven
+pathlib ; python_version < '3.3'
+# raven
 requests

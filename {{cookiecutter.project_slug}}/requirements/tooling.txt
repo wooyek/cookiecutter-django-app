@@ -13,4 +13,5 @@ pygments
 readme-renderer
 setuptools
 tox
+detox
 wheel
