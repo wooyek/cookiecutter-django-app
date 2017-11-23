@@ -25,15 +25,15 @@ Instead of hacking boilerplate setup you can jump to coding immediately. All the
 
 .. image:: https://api.codeclimate.com/v1/badges/3a10b53e791d1e7a554a/maintainability
     :target: https://codeclimate.com/github/wooyek/cookiecutter-django-app/maintainability
-   :alt: Maintainability
+    :alt: Maintainability
 
 .. image:: https://img.shields.io/github/license/wooyek/cookiecutter-django-app.svg
     :target: https://github.com/wooyek/cookiecutter-django-app/
-        :alt: License
+    :alt: License
 
 .. image:: https://img.shields.io/twitter/url/https/github.com/wooyek/cookiecutter-django-app.svg?style=social
     :target: https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fwooyek%2Fcookiecutter-django-app
-        :alt: Tweet about this project
+    :alt: Tweet about this project
 
 .. image:: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg
     :target: https://saythanks.io/to/wooyek
