@@ -1,12 +1,16 @@
 language: python
 sudo: false
 
-python: 3.5
+python:
+  - "3.5"
+  - "3.4"
+  - "2.7"
 
-env:
-  - TOXENV=py35
-  - TOXENV=py34
-  - TOXENV=py27
+matrix:
+    fast_finish: true
+    allow_failures:
+      - python: "2.7"
+
 
 before_install:
   - python --version
@@ -15,7 +19,7 @@ before_install:
   - sudo apt-get install -y git-flow python-enchant
 
 install:
-  - pip install -U tox setuptools pip cookiecutter
+  - pip install -U tox setuptools pip cookiecutter tox-travis
   - virtualenv --version
   - easy_install --version
   - pip --version
