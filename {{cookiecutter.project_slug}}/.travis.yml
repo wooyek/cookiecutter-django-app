@@ -1,10 +1,10 @@
 language: python
 
 python:
-    - "2.7"
-    - "3.4"
-    - "3.5"
     - "3.6"
+    - "3.5"
+    - "3.4"
+    - "2.7"
 
 env:
     - DJANGO=1.11
@@ -36,6 +36,7 @@ before_install:
 
 install:
   - pip install -r requirements/development.txt coveralls tox-travis
+  - pip install .
   - virtualenv --version
   - easy_install --version
   - pip --version
@@ -59,6 +60,7 @@ jobs:
           - make lint
           - make test
           - make tox
+          - make detox
           - make coverage
           - make dist
           - make install

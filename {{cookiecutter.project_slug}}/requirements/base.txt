@@ -3,7 +3,6 @@
 # For development we keep them unfreezed to work and test on newest versions as soon as they are released
 # Freezing can be perforemd by pip-compile or pipenv
 
-# Here are some popular dependencies
 click
 django
 django-environ
@@ -15,6 +14,7 @@ django-pascal-templates
 # django-powerbank
 # django-reversion
 # django_email_queue
+enum34 ; python_version < '3.4'
 # html2text
 # isoweek
 # jinja2-highlight

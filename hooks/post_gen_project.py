@@ -1,55 +1,62 @@
 #!/usr/bin/env python
 import os
-
+import platform
 import shutil
+import sys
 from subprocess import call
 
 import six
-import sys
-import platform
 
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
+
+PROJECT_SLUG = "{{ cookiecutter.project_slug }}"
+CREATE_VIRTUAL_ENVIRONMENT = '{{ cookiecutter.create_virtual_environment }}'.lower() == 'y'
+CREATE_EXAMPLE_PROJECT = '{{ cookiecutter.create_example_project }}'.lower() == 'y'
+CREATE_AUTHOR_FILE = '{{ cookiecutter.create_author_file }}' != 'y'
+REPO_URL = "{{ cookiecutter.repo_url }}"
+INCLUDE_SPHINX_DOC = '{{ cookiecutter.include_sphinx_doc }}' != 'y'
+GIT_INIT = '{{ cookiecutter.git_init }}'.lower() == 'y'
+RUN_TESTS = '{{ cookiecutter.run_tests_on_init }}' == 'y'
+INCLUDE_SPHINX = '{{ cookiecutter.include_sphinx_doc }}' == 'y'
+
+VEX_AVAILABLE = shutil.which('vex')
+PEW_AVAILABLE = shutil.which('pew')
+PIPENV_AVAILABLE = shutil.which('pipenv')
 
 
 def remove_file(filepath):
     os.remove(os.path.join(PROJECT_DIRECTORY, filepath))
 
 
-def bootstrap_pew(python):
-    print("-------> Python Env Wrapper: Bootstrapping virtual environment")
-    # delegate all the work to the pew tool
-    call((
-        "pew", 'new',
-        "--python", python,
-        '-a', PROJECT_DIRECTORY,
-        '-i', 'setuptools',
-        '-r', 'requirements/development.txt',
-        '--dont-activate',
-        '{{ cookiecutter.project_slug }}'
-    ))
-    return
-
-
-def bootstrap_pyvenv(python):
-    if six.PY2:
-        print("-------> VirtualEnv: Bootstrapping virtual environment")
-        call(["virtualenv", "--clear", ".pyvenv"])
-    else:
-        print("-------> PyVenv: Bootstrapping virtual environment")
-        call([python, "-m", "venv", "--clear", ".pyvenv"])
-
-    venv_py = ".pyvenv/Scripts/python" if platform.system() == "Windows" else ".pyvenv/bin/python"
-    call([venv_py, "-m", "pip", "install", "-U", "pip", "setuptools"])
-    call([venv_py, "-m", "pip", "install", "-r", "requirements/development.txt"])
-
-
 def bootstrap_venv():
     # On Windows  current python3 may just be python or not available from PATH
     python = sys.executable or 'python3'
-    if six.PY3 and shutil.which('pew'):
-        bootstrap_pew(python)
+    if PEW_AVAILABLE:
+        print("-------> Python Env Wrapper: Bootstrapping virtual environment")
+        # delegate all the work to the pew tool
+        call((
+            "pew", 'new',
+            "--python", python,
+            '-a', PROJECT_DIRECTORY,
+            '-i', 'setuptools',
+            '-r', 'requirements/development.txt',
+            '--dont-activate',
+            '{{ cookiecutter.project_slug }}'
+        ))
+        call(["pew", "in", PROJECT_SLUG, "pip", "-e", "."])
+
     else:
-        bootstrap_pyvenv(python)
+        if six.PY2:
+            print("-------> VirtualEnv: Bootstrapping virtual environment")
+            call(["virtualenv", "--clear", ".pyvenv"])
+        else:
+            print("-------> PyVenv: Bootstrapping virtual environment")
+            call([python, "-m", "venv", "--clear", ".pyvenv"])
+
+        venv_py = ".pyvenv/Scripts/python" if platform.system() == "Windows" else ".pyvenv/bin/python"
+        call([venv_py, "-m", "pip", "install", "-U", "pip", "setuptools"])
+        call([venv_py, "-m", "pip", "install", "-r", "requirements/development.txt"])
+        call([venv_py, "-m", "pip", "install", "-e", "."])
 
 
 def git_init():
@@ -58,36 +65,35 @@ def git_init():
     call(["git", "add", "--all"])
     call(["git", "commit", "-am", "init"])
     call(["git", "flow", "init", "-d"])
-    call(["git", "remote", "add", "origin", "{{ cookiecutter.repo_url }}.git"])
+    call(["git", "remote", "add", "origin", REPO_URL])
 
 
 if __name__ == '__main__':
-    if '{{ cookiecutter.create_author_file }}' != 'y':
+    if CREATE_AUTHOR_FILE:
         remove_file('AUTHORS.rst')
         remove_file('docs/authors.rst')
 
-    if '{{ cookiecutter.create_virtual_environment }}'.lower() == 'y':
+    if CREATE_VIRTUAL_ENVIRONMENT:
         bootstrap_venv()
-
-        if '{{ cookiecutter.include_sphinx_doc }}' == 'y':
-            if six.PY3 and shutil.which('pew'):
+        if INCLUDE_SPHINX:
+            if VEX_AVAILABLE:
                 print("-------> Building documentation through vex + make")
-                call(["vex", "{{ cookiecutter.project_slug }}", "make", "docs"])
+                call(["vex", PROJECT_SLUG, "make", "docs"])
             else:
                 # TODO: Activate pyvenv before running make
                 call(["make", "docs"])
 
-    if '{{ cookiecutter.include_sphinx_doc }}' != 'y':
+    if INCLUDE_SPHINX_DOC:
         shutil.rmtree(os.path.join(PROJECT_DIRECTORY, 'docs'))
 
-    if '{{ cookiecutter.create_example_project }}'.lower() == 'n':
+    if not CREATE_EXAMPLE_PROJECT:
         location = os.path.join(PROJECT_DIRECTORY, 'example_project')
         shutil.rmtree(location)
 
-    if '{{ cookiecutter.git_init }}'.lower() == 'y':
+    if GIT_INIT:
         git_init()
 
-    if '{{ cookiecutter.run_tests_on_init }}' == 'y':
+    if RUN_TESTS:
         print("-------> Running tests")
         # call(["detox", "--skip-missing-interpreters"])
         # call(["detox", "--skip-missing-interpreters", "-e", "clean,py35-django-111,check,report,docs,spell"])
@@ -95,15 +101,16 @@ if __name__ == '__main__':
         call(["make", "tox"])
 
     print(""" 
-=============================================================================== 
-Hi {{ cookiecutter.repo_username }}, 
-
-as you probably know, creating and maintaining any open source is a massive 
-amount of free work. So please spread the word, star any project you use 
-and say thank's to it's authors on twitter.
-
-Thx, @wooyek
-===============================================================================    
+ ╭────────────────────────────────────────────────────────────────────────────
+ │ Hi {{ cookiecutter.repo_username }}, 
+ │  
+ │ as you probably know, creating and maintaining any open source is a massive 
+ │ amount of free work. So please spread the word, star any project you use 
+ │ and say thank's to it's authors on twitter.
+ │ 
+ │ Thx, @wooyek
+ │ https://github.com/wooyek
+ ╰────────────────────────────────────────────────────────────────────────────
 """)
-    if '{{ cookiecutter.create_virtual_environment }}'.lower() == 'y' and six.PY3 and shutil.which('pew'):
-        call(["pew", "workon", "{{ cookiecutter.project_slug }}"])
+    if CREATE_VIRTUAL_ENVIRONMENT and VEX_AVAILABLE:
+        call(["vex", PROJECT_SLUG])

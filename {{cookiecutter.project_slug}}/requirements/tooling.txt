@@ -5,13 +5,11 @@ bump2version
 check-manifest
 codecov
 coverage
+detox
 flake8
-invoke
 isort
-pip
 pygments
 readme-renderer
 setuptools
 tox
-detox
 wheel
