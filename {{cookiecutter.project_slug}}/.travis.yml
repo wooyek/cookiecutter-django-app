@@ -1,21 +1,32 @@
 language: python
 
 python:
-  - "3.5"
+    - "2.7"
+    - "3.4"
+    - "3.5"
+    - "3.6"
 
 env:
-  - TOX_ENV=py34-django-111
-  - TOX_ENV=py35-django-111
-  - TOX_ENV=py36-django-111
-  - TOX_ENV=py34-django-20
-  - TOX_ENV=py35-django-20
-  - TOX_ENV=py36-django-20
-  - TOX_ENV=py34-django-master
-  - TOX_ENV=py35-django-master
-  - TOX_ENV=py36-django-master
+    - DJANGO=1.11
+    - DJANGO=2.0
+    - DJANGO=master
 
 matrix:
-  fast_finish: true
+    fast_finish: true
+    include:
+      - { python: "3.5", env: TOXENV=check }
+      - { python: "3.5", env: TOXENV=docs }
+    exclude:
+      - { python: "2.7", env: DJANGO=2.0 }
+      - { python: "3.4", env: DJANGO=2.0 }
+      - { python: "2.7", env: DJANGO=master }
+      - { python: "3.4", env: DJANGO=master }
+      - { python: "3.5", env: DJANGO=master }
+
+    allow_failures:
+      - python: "2.7"
+      - env: DJANGO=2.0
+      - env: DJANGO=master
 
 before_install:
   - python --version
@@ -24,7 +35,7 @@ before_install:
   - sudo apt-get install -y git-flow python-enchant
 
 install:
-  - pip install -r requirements/development.txt coveralls
+  - pip install -r requirements/development.txt coveralls tox-travis
   - virtualenv --version
   - easy_install --version
   - pip --version
@@ -32,7 +43,7 @@ install:
   - git --version
 
 script:
-  - tox -e $TOX_ENV
+  - tox
 
 jobs:
   include:
@@ -57,7 +68,7 @@ jobs:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - codecov -e TOX_ENV
+  - codecov -e TOXENV,DJANGO
   - coveralls
 
 notifications:
