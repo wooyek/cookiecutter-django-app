@@ -74,7 +74,7 @@ coverage-report: coverage ## check code coverage and view report in the browser
 	$(BROWSER) tmp/coverage/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/{{ cookiecutter.package_name }}.rst
+	rm -f docs/{{ cookiecutter.package_name }}*.rst
 	rm -f docs/modules.rst
 	sphinx-apidoc -o docs/ -H "Api docs" src
 	$(MAKE) -C docs clean
@@ -113,9 +113,11 @@ bump: ## increment version number
 	bumpversion patch
 
 upgrade: ## upgrade frozen requirements to the latest version
+	pipenv install -r requirements/production.txt
+	pipenv install --dev -r requirements/development.txt
 	pipenv lock --requirements > requirements.txt
 
-release: sync bump publish ## build new package varsion release then upload to pypi
+release: sync bump publish ## build new package version release then upload to pypi
 	git checkout develop
 	git merge master --verbose
 	git push origin develop --verbose

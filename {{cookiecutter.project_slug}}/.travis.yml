@@ -42,11 +42,13 @@ install:
   - tox --version
   - git --version
 
-script: - tox
+script:
+  - tox --skip-missing-interpreters
 
 jobs:
   include:
     - stage: make
+      python: "3.5"
       script:
           - which python
           - tox --version
@@ -56,7 +58,7 @@ jobs:
           - make bump
           - make lint
           - make test
-          - make test-all
+          - make tox
           - make coverage
           - make dist
           - make install
