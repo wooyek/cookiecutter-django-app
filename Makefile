@@ -28,7 +28,7 @@ test: ## run tests quickly with the default Python
 	pytest
 
 test-all: ## run tests on every Python version with tox
-	tox -e py27,docs
+	tox -e py35,docs
 
 publish: ## package and upload a release
 	git checkout develop
