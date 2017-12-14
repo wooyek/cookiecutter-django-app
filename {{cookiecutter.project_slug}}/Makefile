@@ -116,6 +116,7 @@ upgrade: ## upgrade frozen requirements to the latest version
 	pipenv install -r requirements/production.txt
 	pipenv install --dev -r requirements/development.txt
 	pipenv lock --requirements > requirements.txt
+	sort requirements.txt -o requirements.txt
 
 release: sync bump publish ## build new package version release then upload to pypi
 	git checkout develop
