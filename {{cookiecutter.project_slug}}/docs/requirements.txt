@@ -2,8 +2,5 @@ sphinx>=1.6.5
 {{ cookiecutter.sphinx_theme|replace('_', '-') }}
 # https://github.com/sphinx-doc/sphinx/issues/3212
 docutils==0.13.1
-django
-django-environ
 sphinxcontrib-spelling
 pyenchant
--r ../requirements/optional.txt

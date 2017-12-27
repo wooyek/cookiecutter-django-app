@@ -15,10 +15,14 @@ try:
     from setuptools import setup, find_packages
 except ImportError:
     from distutils.core import setup
-install_requires = parse_requirements(
-    os.path.join(os.path.dirname(__file__), "requirements.txt"),
-    session=uuid.uuid1()
-)
+
+
+def requirements(path):
+    items = parse_requirements(path, session=uuid.uuid1())
+    return [";".join((str(r.req), str(r.markers))) if r.markers else str(r.req) for r in items]
+
+
+install_requires = requirements(os.path.join(os.path.dirname(__file__), "requirements.txt"))
 
 
 def get_version(*file_paths):
@@ -59,7 +63,7 @@ setup(
         '': ['test*.py', 'tests/*.env', '**/tests.py'],
     },
     python_requires='>=2.7',
-    install_requires=[str(r.req) for r in install_requires] + ['Django>=1.10'],
+    install_requires=install_requires,
     extras_require={
         'factories': ['factory-boy'],
     },
