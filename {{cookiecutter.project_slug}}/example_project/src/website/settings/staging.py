@@ -38,4 +38,4 @@ if evironment_config.exists():
     environ.Env.read_env(str(evironment_config))
 
 # noinspection PyUnresolvedReferences
-from .base import *  # noqa: F402, F403, F401
+from .base import *  # noqa: F402, F403, F401 isort:skip

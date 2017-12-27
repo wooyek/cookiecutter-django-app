@@ -33,6 +33,7 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
+	rm -fr example_project/.eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
 
@@ -48,11 +49,11 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 
 isort:
-	isort --verbose --recursive src tests setup.py
+	isort --verbose --recursive src tests example_project setup.py
 
 lint: ## check style with flake8
 	flake8 src tests setup.py manage.py
-	isort --verbose --check-only --diff --recursive src tests setup.py
+	isort --verbose --check-only --diff --recursive src tests example_project setup.py
 	python setup.py check --strict --metadata --restructuredtext
 	check-manifest  --ignore .idea,.idea/* .
 
@@ -123,3 +124,8 @@ release: sync bump publish ## build new package version release then upload to p
 	git merge master --verbose
 	git push origin develop --verbose
 	git push origin master --verbose
+
+locales:
+	# https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-makemessages
+	python manage.py makemessages -v 3 --no-wrap --ignore ".*" --locale=pl_PL
+	python manage.py compilemessages -v 3

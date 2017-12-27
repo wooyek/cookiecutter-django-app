@@ -15,10 +15,12 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 from __future__ import absolute_import, unicode_literals
-import os
+
 import logging
+import os
 import socket
 from pathlib import Path
+
 import environ
 
 logging.basicConfig(format='%(asctime)s %(levelname)-7s %(thread)-5d %(filename)s:%(lineno)s | %(funcName)s | %(message)s', datefmt='%H:%M:%S')
@@ -119,6 +121,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -146,7 +149,6 @@ TEMPLATES = [
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
-                'django.template.loaders.eggs.Loader',
             ],
         },
     },
@@ -174,10 +176,20 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# https://docs.djangoproject.com/en/1.9/topics/i18n/translation/#how-django-discovers-language-preference
+import django_powerbank  # noqa F402 isort:skip
+import {{cookiecutter.package_name}}  # noqa F402 isort:skip
+
+LOCALE_PATHS = [
+    str(Path({{ cookiecutter.package_name }}.__file__).parent / 'locales'),
+    str(BASE_DIR / 'locales'),
+    str(Path(django_powerbank.__file__).parent / 'locales'),
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = str(BASE_DIR / 'static')
 
 # https://docs.djangoproject.com/en/1.9/ref/settings/#logging
 LOGGING = {

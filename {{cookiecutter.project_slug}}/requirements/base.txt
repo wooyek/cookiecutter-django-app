@@ -4,7 +4,8 @@
 # Freezing can be perforemd by pip-compile or pipenv
 
 click
-django
+django<2.0 ; python_version < '3.5'
+django>=2.0 ; python_version >= '3.5'
 django-environ
 django-formtools
 django-import-export

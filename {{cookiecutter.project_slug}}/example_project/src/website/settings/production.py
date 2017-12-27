@@ -38,7 +38,7 @@ if evironment_config.exists():
     environ.Env.read_env(str(evironment_config))
 
 # noinspection PyUnresolvedReferences
-from .base import *  # noqa: F402, F403
+from .base import *  # noqa: F402, F403 isort:skip
 
 LOGGING['handlers']['console']['formatter'] = 'heroku'  # noqa: F405
 LOGGING['handlers']['file'] = {  # noqa: F405

@@ -15,7 +15,7 @@ logging.debug("Settings loading: %s" % __file__)
 # This will read missing environment variables from a file
 # We want to do this before loading any base settings as they may depend on environment
 environ.Env.read_env(str(Path(__file__).parent / "local.env"), DEBUG='True')
-from .base import *  # noqa: F402, F403
+from .base import *  # noqa: F402, F403 isort:skip
 
 # https://docs.djangoproject.com/en/1.6/topics/email/#console-backend
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
