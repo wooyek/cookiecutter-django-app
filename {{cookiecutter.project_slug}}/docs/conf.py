@@ -54,7 +54,7 @@ linkcheck_ignore = [
     r'https://{{ cookiecutter.project_slug }}.readthedocs.io.*',
     r'https://codeclimate.com/github/{{ cookiecutter.repo_username|replace(' ', '') }}/{{ cookiecutter.project_slug }}.*',
     r'https://github.com/{{ cookiecutter.repo_username|replace(' ', '') }}/{{ cookiecutter.project_slug }}.*',
-    r'https://codecov.io/gh/{{ cookiecutter.repo_username|replace(' ', '') }}/django-reusable.*',
+    r'https://codecov.io/gh/{{ cookiecutter.repo_username|replace(' ', '') }}/{{ cookiecutter.project_slug }}.*',
     r'https://coveralls.io/github/{{ cookiecutter.repo_username|replace(' ', '') }}/{{ cookiecutter.project_slug }}.*',
     r'https://pypi.python.org/pypi/{{ cookiecutter.project_slug }}',
 ]

@@ -114,7 +114,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'bootstrapform',
     'import_export',
     '{{ cookiecutter.package_name }}.apps.{{ cookiecutter.app_config_name }}',
 ]
@@ -127,7 +126,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -177,13 +175,13 @@ USE_L10N = True
 USE_TZ = True
 
 # https://docs.djangoproject.com/en/1.9/topics/i18n/translation/#how-django-discovers-language-preference
-import django_powerbank  # noqa F402 isort:skip
+# import django_powerbank  # noqa F402 isort:skip
 import {{cookiecutter.package_name}}  # noqa F402 isort:skip
 
 LOCALE_PATHS = [
     str(Path({{ cookiecutter.package_name }}.__file__).parent / 'locales'),
     str(BASE_DIR / 'locales'),
-    str(Path(django_powerbank.__file__).parent / 'locales'),
+#    str(Path(django_powerbank.__file__).parent / 'locales'),
 ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/

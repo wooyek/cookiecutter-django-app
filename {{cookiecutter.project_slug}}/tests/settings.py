@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "{{ cookiecutter.package_name }}.apps.{{ cookiecutter.app_config_name }}",
+    "tests.test_app",
 ]
 
 ROOT_URLCONF = 'tests.urls'

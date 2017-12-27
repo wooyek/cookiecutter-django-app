@@ -43,7 +43,8 @@ def bootstrap_venv():
             '--dont-activate',
             '{{ cookiecutter.project_slug }}'
         ))
-        call(["pew", "in", PROJECT_SLUG, "pip", "-e", "."])
+        # Editable installs are done from requirements
+        # call(["pew", "in", PROJECT_SLUG, "pip", "-e", "."])
 
     else:
         if six.PY2:

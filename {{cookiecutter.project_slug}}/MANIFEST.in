@@ -61,3 +61,4 @@ recursive-exclude example_project/.eggs *.*
 recursive-include example_project *.iml
 recursive-include example_project *.xml
 recursive-include example_project *.po
+recursive-include example_project *.cfg
