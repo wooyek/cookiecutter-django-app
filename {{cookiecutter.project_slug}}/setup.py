@@ -28,6 +28,7 @@ def requirements(path):
     items = parse_requirements(path, session=uuid.uuid1())
     return [";".join((str(r.req), str(r.markers))) if r.markers else str(r.req) for r in items]
 
+
 tests_require = requirements(os.path.join(os.path.dirname(__file__), "requirements", "testing.txt"))
 install_requires = requirements(os.path.join(os.path.dirname(__file__), "requirements", "production.txt"))
 install_requires += ['django>=1.8']
