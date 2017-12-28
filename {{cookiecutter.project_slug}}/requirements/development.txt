@@ -8,7 +8,9 @@
 # pipenv has issues with such installation, we will have to perform it manually
 # https://github.com/kennethreitz/pipenv/issues/540
 -e .
+{% if cookiecutter.create_example_project == 'y' -%}
 -e example_project
+{%- endif %}
 
 # Tooling
 -r tooling.txt

@@ -9,7 +9,7 @@
     "bitbucket.org"
   ],
   "repo_username": "Used to initialize GIT repo origin remote",
-  "repo_url": "git://{{ cookiecutter.repo_domain }}:{{ cookiecutter.repo_username }}/{{ cookiecutter.project_slug }}.git",
+  "repo_url": "git@{{ cookiecutter.repo_domain }}:{{ cookiecutter.repo_username }}/{{ cookiecutter.project_slug }}.git",
   "project_url": "https://{{ cookiecutter.repo_domain }}/{{ cookiecutter.repo_username }}/{{ cookiecutter.project_slug }}",
   "full_name": "Your full name",
   "email": "Your email used for package publication",
