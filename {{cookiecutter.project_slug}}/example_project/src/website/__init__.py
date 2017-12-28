@@ -1,4 +1,5 @@
 # coding=utf-8
+# -*- coding: utf-8 -*-
 """Top-level package for {{ cookiecutter.project_name }} example project."""
 
 __author__ = """{{ cookiecutter.full_name }}"""
