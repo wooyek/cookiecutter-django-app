@@ -107,11 +107,9 @@ if __name__ == '__main__':
         location = os.path.join(PROJECT_DIRECTORY, 'example_project')
         shutil.rmtree(location)
 
-    if CREATE_VIRTUAL_ENVIRONMENT and VEX_AVAILABLE:
-        if PIPENV_AVAILABLE:
-            call(["vex", PROJECT_SLUG, 'pipenv', 'install', '-r', 'requirements/production.txt'])
-            call(["vex", PROJECT_SLUG, 'pipenv', 'install', '--dev', '-r', 'requirements/development.txt'])
-        call(["vex", PROJECT_SLUG])
+    if CREATE_VIRTUAL_ENVIRONMENT and VEX_AVAILABLE and PIPENV_AVAILABLE:
+        call(["vex", PROJECT_SLUG, 'pipenv', 'install', '-r', 'requirements/production.txt'])
+        call(["vex", PROJECT_SLUG, 'pipenv', 'install', '--dev', '-r', 'requirements/development.txt'])
 
     if GIT_INIT:
         git_init()
@@ -124,3 +122,5 @@ if __name__ == '__main__':
         call(["make", "tox"])
 
     print(BANNER)
+    if CREATE_VIRTUAL_ENVIRONMENT and VEX_AVAILABLE:
+        call(["vex", PROJECT_SLUG])

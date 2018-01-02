@@ -20,6 +20,7 @@
     "ISC license",
     "Apache Software License 2.0",
     "GNU General Public License v3",
+    "GNU Affero General Public License v3",
     "Propertiary"
   ],
   "copyright": "{{ cookiecutter.full_name }}",

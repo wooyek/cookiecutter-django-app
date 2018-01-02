@@ -27,6 +27,10 @@ install:
   - tox --version
   - git --version
   - python3 -m venv -h
+  - env
+  # Wee need to create a virtualenvs folder to fool PEW that is not a new environment
+  # https://github.com/berdario/pew/blob/cd4ecd6775340ad9dbec37e10b4b3618dc36b49c/pew/pew.py#L59
+  - mkdir -p ~/.local/share/virtualenvs
 
 script:
   # If test fail with vague messages, uncomment this and see generation log
