@@ -19,7 +19,7 @@ before_install:
   - sudo apt-get install -y git-flow python-enchant
 
 install:
-  - pip install -U tox setuptools pip cookiecutter tox-travis vex pew pipenv
+  - pip install -U tox detox setuptools pip cookiecutter tox-travis vex pew pipenv
   - pip install "backports.shutil_which ; python_version < '3.4'"
   - virtualenv --version
   - easy_install --version
@@ -30,7 +30,9 @@ install:
   - env
   # Wee need to create a virtualenvs folder to fool PEW that is not a new environment
   # https://github.com/berdario/pew/blob/cd4ecd6775340ad9dbec37e10b4b3618dc36b49c/pew/pew.py#L59
-  - mkdir -p ~/.local/share/virtualenvs
+  - export WORKON_HOME=~/.local/share/virtualenvs
+  - export PACKAGE_NAME=python-pypi-library-boilerplate
+  - mkdir -p $WORKON_HOME
 
 script:
   # If test fail with vague messages, uncomment this and see generation log
@@ -43,25 +45,25 @@ jobs:
       script:
           - env
           - cookiecutter --no-input .
-          - cd django-reusable-app
+          - cd $PACKAGE_NAME
           - which python
-          - ls -la .pyvenv/bin/
-          - ls -la /home/travis/virtualenv/python3.5.4/bin
+          # - ls -la .pyvenv/bin/
+          - ls -la $VIRTUAL_ENV/bin
           - tox --version
           - pwd
           - ls -la
           - make
-          - make bump
-          - make lint
-          - make test
+          - vex $PACKAGE_NAME make bump
+          - vex $PACKAGE_NAME make lint
+          - vex $PACKAGE_NAME make test
           - make tox
           - make detox
-          - make coverage
+          - vex $PACKAGE_NAME make coverage
           - make dist
           - make install
-          - make docs
+          - vex $PACKAGE_NAME make docs
           # Lint again after docs generation
-          - make lint
+          - vex $PACKAGE_NAME make lint
           - make clean
 
 after_success:
