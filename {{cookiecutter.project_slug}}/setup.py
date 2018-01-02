@@ -110,15 +110,20 @@ setup(
     zip_safe=False,
     keywords='{{ cookiecutter.project_slug }}',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 2 - Pre-Alpha',
         'Framework :: Django :: 1.10',
         'Intended Audience :: Developers',
 {%- if cookiecutter.open_source_license in license_classifiers %}
         '{{ license_classifiers[cookiecutter.open_source_license] }}',
 {%- endif %}
         'Natural Language :: English',
+        "Programming Language :: Python :: 2",
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='runtests.run_tests',
     tests_require=tests_require,

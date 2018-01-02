@@ -8,6 +8,19 @@ from subprocess import call
 
 import six
 
+BANNER = """ 
+ ╭────────────────────────────────────────────────────────────────────────────
+ │ Hi {{ cookiecutter.repo_username }}, 
+ │  
+ │ as you probably know, creating and maintaining any open source is a massive 
+ │ amount of free work. So please spread the word, star any project you use 
+ │ and say thank's to it's authors on twitter.
+ │ 
+ │ Thx, @wooyek
+ │ https://github.com/wooyek
+ ╰────────────────────────────────────────────────────────────────────────────
+"""
+
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
 PROJECT_SLUG = "{{ cookiecutter.project_slug }}"
@@ -20,9 +33,14 @@ GIT_INIT = '{{ cookiecutter.git_init }}'.lower() == 'y'
 RUN_TESTS = '{{ cookiecutter.run_tests_on_init }}' == 'y'
 INCLUDE_SPHINX = '{{ cookiecutter.include_sphinx_doc }}' == 'y'
 
-VEX_AVAILABLE = shutil.which('vex')
-PEW_AVAILABLE = shutil.which('pew')
-PIPENV_AVAILABLE = shutil.which('pipenv')
+try:
+    from shutil import which as shutil_which
+except ImportError:
+    from backports.shutil_which import which as shutil_which
+
+VEX_AVAILABLE = shutil_which('vex')
+PEW_AVAILABLE = shutil_which('pew')
+PIPENV_AVAILABLE = shutil_which('pipenv')
 
 
 def remove_file(filepath):
@@ -71,9 +89,6 @@ def git_init():
 
 
 if __name__ == '__main__':
-    if CREATE_AUTHOR_FILE:
-        remove_file('AUTHORS.rst')
-        remove_file('docs/authors.rst')
 
     if CREATE_VIRTUAL_ENVIRONMENT:
         bootstrap_venv()
@@ -92,6 +107,12 @@ if __name__ == '__main__':
         location = os.path.join(PROJECT_DIRECTORY, 'example_project')
         shutil.rmtree(location)
 
+    if CREATE_VIRTUAL_ENVIRONMENT and VEX_AVAILABLE:
+        if PIPENV_AVAILABLE:
+            call(["vex", PROJECT_SLUG, 'pipenv', 'install', '-r', 'requirements/production.txt'])
+            call(["vex", PROJECT_SLUG, 'pipenv', 'install', '--dev', '-r', 'requirements/development.txt'])
+        call(["vex", PROJECT_SLUG])
+
     if GIT_INIT:
         git_init()
 
@@ -102,17 +123,4 @@ if __name__ == '__main__':
         # call(["make", "test"])
         call(["make", "tox"])
 
-    print(""" 
- ╭────────────────────────────────────────────────────────────────────────────
- │ Hi {{ cookiecutter.repo_username }}, 
- │  
- │ as you probably know, creating and maintaining any open source is a massive 
- │ amount of free work. So please spread the word, star any project you use 
- │ and say thank's to it's authors on twitter.
- │ 
- │ Thx, @wooyek
- │ https://github.com/wooyek
- ╰────────────────────────────────────────────────────────────────────────────
-""")
-    if CREATE_VIRTUAL_ENVIRONMENT and VEX_AVAILABLE:
-        call(["vex", PROJECT_SLUG])
+    print(BANNER)

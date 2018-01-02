@@ -72,16 +72,15 @@ Before we start we need some tooling::
     pipsi install pew
     pipsi install vex
     pipsi install pipenv
+    pip install "backports.shutil_which ; python_version < '3.4'"
 
 Now we can generate and initialize a Django app package project::
 
     cookiecutter https://github.com/wooyek/cookiecutter-django-app.git
 
 You'll be prompted for some infomation, based on your choices cookiecutter create a directory that is your new package.
-This directory should contain fully initialized project. Empty but passing tests and ready to be pushed and released.
 
-Initial tests and linting should fail on links to your project and documentation returning 404 and unused import in empty modules.
-Once you write some code push changes to the repo and setup Read The Docs all should nicely go green.
+This directory should contain fully initialized project. Empty but passing tests and ready to be pushed and released.
 
 Post generation provisioning
 ----------------------------
@@ -122,9 +121,9 @@ it's time to register the app on PyPI::
     python setup.py register
 
 
-Time to release a new version? Bam!
+Time to release a new version and upload it to PyPi? Bam!
 
-    $ make release
+    $ make publish
 
 It will sync your local and origin repo, test, increment version number, setup and release package then push to origin master.
 

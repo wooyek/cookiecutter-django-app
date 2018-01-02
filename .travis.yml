@@ -3,7 +3,7 @@ sudo: false
 
 python:
   - "3.5"
-  - "3.4"
+  - "3.6"
   - "2.7"
 
 matrix:
@@ -19,7 +19,8 @@ before_install:
   - sudo apt-get install -y git-flow python-enchant
 
 install:
-  - pip install -U tox setuptools pip cookiecutter tox-travis
+  - pip install -U tox setuptools pip cookiecutter tox-travis vex pew pipenv
+  - pip install "backports.shutil_which ; python_version < '3.4'"
   - virtualenv --version
   - easy_install --version
   - pip --version
@@ -36,11 +37,12 @@ jobs:
   include:
     - stage: make
       script:
+          - env
           - cookiecutter --no-input .
           - cd django-reusable-app
           - which python
           - ls -la .pyvenv/bin/
-          - ls -la /home/travis/virtualenv/python3.5.3/bin
+          - ls -la /home/travis/virtualenv/python3.5.4/bin
           - tox --version
           - pwd
           - ls -la
@@ -48,8 +50,7 @@ jobs:
           - make bump
           - make lint
           - make test
-          - make tox
-          - make detox
+          - make test-all
           - make coverage
           - make dist
           - make install

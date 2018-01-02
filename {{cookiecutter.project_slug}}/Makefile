@@ -61,10 +61,10 @@ test: ## run tests quickly with the default Python
 	pytest
 
 tox: ## run tests on every Python version with tox
-	tox --skip-missing-interpreters --recreate -e clean,py35-django-111,check,report,docs,spell
-
+	tox --skip-missing-interpreters --recreate
+	
 detox: ## run tests on every Python version with tox
-	detox --skip-missing-interpreters --recreate -e clean,py35-django-111,check,report,docs,spell
+	detox --skip-missing-interpreters --recreate
 
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source src --parallel-mode setup.py test
@@ -87,7 +87,7 @@ docs-view: docs ## generate Sphinx HTML documentation, including API docs
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
-publish: clean ## package and upload a release
+upload: clean ## package and upload a release
 	python setup.py sdist upload
 	python setup.py bdist_wheel upload
 
@@ -119,11 +119,13 @@ upgrade: ## upgrade frozen requirements to the latest version
 	pipenv lock --requirements > requirements.txt
 	sort requirements.txt -o requirements.txt
 
-release: sync bump publish ## build new package version release then upload to pypi
+release: upgrade sync lint tox bump dist ## build new package version release and sync repo
 	git checkout develop
 	git merge master --verbose
 	git push origin develop --verbose
 	git push origin master --verbose
+
+publish: release upload ## release and upload new version
 
 locales:
 	# https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-makemessages

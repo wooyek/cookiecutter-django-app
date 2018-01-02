@@ -92,4 +92,3 @@ fabric.properties
 # Custom project ignores
 .pyvenv
 .cache
-.tmp
