@@ -3,13 +3,13 @@
 
 """Tests for `{{ cookiecutter.project_slug }}` package."""
 
-import pytest
 from click.testing import CliRunner
 
 import {{ cookiecutter.package_name }}
 from {{ cookiecutter.package_name }} import cli
 
 {{ cookiecutter.package_name }}.__version__
+
 
 def test_command_line_interface():
     """Test the CLI."""
