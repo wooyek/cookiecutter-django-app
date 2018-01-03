@@ -31,7 +31,7 @@ install:
   # Wee need to create a virtualenvs folder to fool PEW that is not a new environment
   # https://github.com/berdario/pew/blob/cd4ecd6775340ad9dbec37e10b4b3618dc36b49c/pew/pew.py#L59
   - export WORKON_HOME=~/.local/share/virtualenvs
-  - export PACKAGE_NAME=python-pypi-library-boilerplate
+  - export PACKAGE_NAME=django-reusable-app
   - mkdir -p $WORKON_HOME
 
 script:
