@@ -43,7 +43,7 @@ def setup_django():
 setup_django()
 import {{ cookiecutter.package_name }}
 
-autodoc_default_flags = ['members',]
+autodoc_default_flags = ['members', 'annotation']
 autosummary_generate = True
 modindex_common_prefix = ['{{ cookiecutter.package_name }}.']
 # html_domain_indices = ['py-modindex']  # ignore np-modindex

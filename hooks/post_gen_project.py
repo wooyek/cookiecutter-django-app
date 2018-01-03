@@ -22,7 +22,6 @@ BANNER = """
 """
 
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
-
 PROJECT_SLUG = "{{ cookiecutter.project_slug }}"
 CREATE_VIRTUAL_ENVIRONMENT = '{{ cookiecutter.create_virtual_environment }}'.lower() == 'y'
 CREATE_EXAMPLE_PROJECT = '{{ cookiecutter.create_example_project }}'.lower() == 'y'
