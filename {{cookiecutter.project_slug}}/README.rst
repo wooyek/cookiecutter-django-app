@@ -3,6 +3,8 @@
 {{ cookiecutter.project_name }}
 {% for _ in cookiecutter.project_name %}={% endfor %}
 
+{{ cookiecutter.project_short_description }}
+
 {% if is_open_source %}
 .. image:: https://img.shields.io/pypi/v/{{ cookiecutter.project_slug }}.svg
         :target: https://pypi.python.org/pypi/{{ cookiecutter.project_slug }}
@@ -42,7 +44,6 @@
 
 {%- endif %}
 
-{{ cookiecutter.project_short_description }}
 
 {% if is_open_source -%}
 * Free software: {{ cookiecutter.open_source_license }}
@@ -105,6 +106,7 @@ Running Tests
 Does the code actually work?
 
 ::
+
     $ pipenv install --dev
     $ pipenv shell
     $ tox
