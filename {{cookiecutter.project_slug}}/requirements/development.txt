@@ -1,5 +1,7 @@
 # All base dependencies
--r base.txt
+# Pipenv will not ignore dev dependencies matching production
+# https://github.com/pypa/pipenv/issues/1255
+# -r base.txt
 
 # For local development we ween all there is in testing
 -r testing.txt

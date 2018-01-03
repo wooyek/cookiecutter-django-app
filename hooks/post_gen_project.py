@@ -51,32 +51,36 @@ def bootstrap_venv():
     # On Windows  current python3 may just be python or not available from PATH
     python = sys.executable or 'python3'
     if PEW_AVAILABLE:
-        print("-------> Python Env Wrapper: Bootstrapping virtual environment")
-        # delegate all the work to the pew tool
-        call((
-            "pew", 'new',
-            "--python", python,
-            '-a', PROJECT_DIRECTORY,
-            '-i', 'setuptools',
-            '-r', 'requirements/development.txt',
-            '--dont-activate',
-            '{{ cookiecutter.project_slug }}'
-        ))
-        # Editable installs are done from requirements
-        # call(["pew", "in", PROJECT_SLUG, "pip", "-e", "."])
+        bootstrap_pew(python)
+        return
 
+    if six.PY2:
+        print("-------> VirtualEnv: Bootstrapping virtual environment")
+        call(["virtualenv", "--clear", ".pyvenv"])
     else:
-        if six.PY2:
-            print("-------> VirtualEnv: Bootstrapping virtual environment")
-            call(["virtualenv", "--clear", ".pyvenv"])
-        else:
-            print("-------> PyVenv: Bootstrapping virtual environment")
-            call([python, "-m", "venv", "--clear", ".pyvenv"])
+        print("-------> PyVenv: Bootstrapping virtual environment")
+        call([python, "-m", "venv", "--clear", ".pyvenv"])
 
-        venv_py = ".pyvenv/Scripts/python" if platform.system() == "Windows" else ".pyvenv/bin/python"
-        call([venv_py, "-m", "pip", "install", "-U", "pip", "setuptools"])
-        call([venv_py, "-m", "pip", "install", "-r", "requirements/development.txt"])
-        call([venv_py, "-m", "pip", "install", "-e", "."])
+    venv_py = ".pyvenv/Scripts/python" if platform.system() == "Windows" else ".pyvenv/bin/python"
+    call([venv_py, "-m", "pip", "install", "-U", "pip", "setuptools"])
+    call([venv_py, "-m", "pip", "install", "-r", "requirements/development.txt"])
+    call([venv_py, "-m", "pip", "install", "-e", "."])
+
+
+def bootstrap_pew(python):
+    print("-------> Python Env Wrapper: Bootstrapping virtual environment")
+    # delegate all the work to the pew tool
+    call((
+        "pew", 'new',
+        "--python", python,
+        '-a', PROJECT_DIRECTORY,
+        '-i', 'setuptools',
+        '-r', 'requirements/development.txt',
+        '--dont-activate',
+        '{{ cookiecutter.project_slug }}'
+    ))
+    # Editable installs are done from requirements
+    # call(["pew", "in", PROJECT_SLUG, "pip", "-e", "."])
 
 
 def git_init():
