@@ -122,5 +122,5 @@ if __name__ == '__main__':
         call(["make", "tox"])
 
     print(BANNER)
-    if CREATE_VIRTUAL_ENVIRONMENT and VEX_AVAILABLE:
+    if CREATE_VIRTUAL_ENVIRONMENT and VEX_AVAILABLE and not os.environ.get('TRAVIS', None):
         call(["vex", PROJECT_SLUG])
