@@ -90,7 +90,7 @@ def test_travis(cookies):
 
         travis_file = result.project.join('.travis.yml')
         travis_text = travis_file.read()
-        assert 'script:\n  - tox --skip-missing-interpreters' in travis_text
+        assert 'script:\n  - tox' in travis_text
 
 
 def test_tox(cookies):
